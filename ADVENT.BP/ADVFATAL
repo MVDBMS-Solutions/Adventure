@@ -1,0 +1,35 @@
+SUBROUTINE ADVFATAL(ERRNUM)
+*  ADVFATAL: Abort ADVENTURE with error message subroutine.
+*
+*  Errors less than '20' are initialization errors.  All others are
+*     'run-time' errors.
+*
+PRECISION 0
+   DIM ERRTEXT(30)
+   ERRTEXT(1) = 'No data section in ADF (ADVENTURE data) file.'
+   ERRTEXT(2) = 'No ADF (ADVENTURE data) file found.'
+   ERRTEXT(3) = 'Travel table overflow.'
+   ERRTEXT(4) = 'Missing section in data portion of ADF (Adventure data file).'
+   ERRTEXT(5) = 'Vocabulary word missing in dictionary of ADF.'
+   ERRTEXT(6) = 'Travel table item was not found (section 3).'
+   ERRTEXT(7) = 'Hint table overflow.'
+   ERRTEXT(8) = 'Condition table initialization error.'
+   ERRTEXT(9) = 'Illegal section number (less than one or greater than 11).'
+   ERRTEXT(10) = 'Property text not on file.'
+   ERRTEXT(11) = 'Class messages not on file.'
+   ERRTEXT(12) = 'Initial object locations not on file.'
+   ERRTEXT(13) = 'Default verb messages not on file.'
+   ERRTEXT(14) = 'Liquid data not on file.'
+   ERRTEXT(15) = 'Hint data not on file.'
+   ERRTEXT(20) = 'Special travel exceeds GOTO list.'
+   ERRTEXT(21) = ''
+   ERRTEXT(22) = 'Vocabulary type not between zero and three.'
+   ERRTEXT(23) = 'Intransitive verb not in GOTO list.'
+   ERRTEXT(24) = 'Transitive verb exceeds GOTO list.'
+   ERRTEXT(25) = 'Conditional travel entry with no alternative.'
+   ERRTEXT(26) = 'Location with no travel entries.'
+   ERRTEXT(27) = 'Hint number runs off GOTO list.'
+   ERRTEXT(28) = 'No location message on file.'
+   CRT
+   CRT ERRTEXT(ERRNUM)
+STOP

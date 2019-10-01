@@ -1,0 +1,66 @@
+SUBROUTINE ADVENT.SCORE
+!
+* ADVENTURE game - scoring subroutine
+*
+* reworked and revised for CDI 4/85 JD Ruggiero
+!
+$INCLUDE ADVENT.BP ADVENT.COMMON
+*
+ SCORE=0
+ MXSCOR=0
+ FOR I=50 TO MAXTRS
+    IF PTEXT<I> # '' THEN
+     BEGIN CASE
+     CASE I<CHEST; K=12
+     CASE I>CHEST; K=16
+     CASE 1; K=14 ;* is chest
+     END CASE
+       IF PROP(I)>=0 THEN SCORE+=2
+       IF PLACE(I)=3 & NOT(PROP(I)) THEN SCORE+=K-2
+       MXSCOR+=K
+     END
+ NEXT I
+*
+ SCORE+=(MAXDIE-NUMDIE)*10
+ MXSCOR+=MAXDIE*10
+ IF NOT(SCORNG ! GAVEUP) THEN SCORE+=4
+ MXSCOR+=4
+ IF DFLAG<>0 THEN SCORE+=25
+ MXSCOR+=25
+ IF CLOSNG THEN SCORE+=25
+ MXSCOR+=25
+ IF CLOSED THEN
+   BEGIN CASE
+     CASE BONUS=0; SCORE+=10
+     CASE BONUS=135; SCORE+=25
+     CASE BONUS=134; SCORE+=30
+     CASE BONUS=133; SCORE+=45
+   END CASE
+ END
+ MXSCOR+=48
+ SCORE+=2+(PLACE(MAGIC)=108)
+ FOR I=1 TO HNTMAX
+    IF HINTED(I) THEN SCORE-=HINTS(I,2)
+ NEXT I
+ IF SCORNG=1 THEN RETURN;* to ADVENTURES
+ CRT
+ CRT
+ CRT "You have scored ":SCORE:" out of a possible ":MXSCOR:", using ":TURNS:" turns."
+ FOR I=1 TO DCOUNT(CTEXT,@AM)
+   Z = CTEXT<I>
+   CALL ADVTEXT(Z)
+   IF Z<1,1> GT SCORE THEN GOTO 20210
+ NEXT I
+ CRT "Score off scale!";STOP
+*
+20210 CRT Z<1,2>
+ CRT
+ IF SCORE+1 >= MXSCOR THEN
+   CRT "To achieve the next higher rating would be a neat trick."
+   CRT
+   CRT "Congratulations!"
+ END ELSE
+   CRT "To achieve the next higher rating, you need ":Z<1,1>-SCORE:" point":"s"[((Z<1,1>-SCORE)=1)+1,1]:"."
+ END
+ IF SCORNG THEN RETURN
+STOP

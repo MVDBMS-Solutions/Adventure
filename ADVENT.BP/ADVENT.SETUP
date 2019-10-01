@@ -1,0 +1,46 @@
+PQ
+C setup an account for the ADVENTURE program
+C jdr 3/2006
+C
+O You're about to do some minor setup so that ADVENTURE will run on this account.
+O Type "Y" to continue, or anything else to stop+
+RI
+IP:
+IF A1 #Y IF A1 #YES Xnothing done.
+C
+C create the advent.master file - modulo should be fine no matter what the system frame size is, but adjust as you see fit
+HSELECT MD 'ADVENT.MASTER'
+STON
+H<
+P
+IF S XIt looks like this account is already setup. No need to run me.
+HCREATE-FILE ADVENT.MASTER 1 37
+PP
+HCREATE-FILE DATA ADVENT.MASTER,SAVED.ADVENTURES 5
+PP
+HCOPY ADVENT.BP TIMEDATE (D
+STON
+H(DICT ADVENT.MASTER
+PP
+C compile ourselves
+HBASIC ADVENT.BP ADVENT.INIT ADVENT.SCORE ADVENT.RESTORE ADVENT.SAVE ADVFATAL ADVTEXT ADVENTURES UNSMASHEM
+PP
+HCATALOG ADVENT.BP ADVENT.INIT ADVENT.SCORE ADVENT.RESTORE ADVENT.SAVE ADVFATAL ADVTEXT ADVENTURES
+PP
+C populate the text file
+HCOPY ADVENT.BP ADVENT.MASTER (DO
+STON
+H(ADVENT.MASTER
+PP
+HRUN ADVENT.BP UNSMASHEM
+PP
+HCOPY ADVENT.BP ADVENTURE
+STON
+H(MD
+PP
+O
+O Setup complete! Simply type "ADVENTURE" at TCL to bring up the game menu.
+O
+O press any key to continue+
+IP:
+X

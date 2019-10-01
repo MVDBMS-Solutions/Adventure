@@ -1,0 +1,32 @@
+PQN
+5 T C,(30,0),(-13),"ADVENTURE menu",(-14),+
+T (0,5),"1.  Display game introduction",+
+T (0,7),"2.  Begin a new adventure",+
+T (0,9),"3.  Resume a suspended adventure",+
+T (0,11),"4.  List all suspended adventures",+
+T (0,13),"5.  Exit",+
+6 T (0,18),"Enter your choice (1-5)   ",(25,18),+
+RI
+IP /
+IF A1 =1 GO 10
+IF A1 =2 GO 20
+IF A1 =3 GO 30
+IF A1 =4 GO 40
+IF A1 =5 X
+IF #A1 X
+GO 6
+10 HCOPY DICT ADVENT.MASTER INSTRUCTIONS (TS
+P
+GO 45
+20 HRUN ADVENT.BP ADVENT.INIT                                           
+P
+GO 45
+30 HRUN ADVENT.BP ADVENT.RESTORE
+P
+GO 45
+40 HSORT ADVENT.MASTER,SAVED.ADVENTURES BY-DSND TIMEDATE TIMEDATE HEADING "Currently saved adventures                                      page 'P'"
+P
+45 O
+OPress <return> to return to the menu+
+IP /
+GO 5

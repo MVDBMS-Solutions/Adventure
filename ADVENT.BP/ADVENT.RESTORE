@@ -1,0 +1,33 @@
+!
+* ADVENTURE game - restore subroutine
+*
+* reworked and revised for CDI 4/85 JD Ruggiero
+*
+PRECISION 0
+COMMON ADVARSE(2090); * overlays entire common area
+OPEN 'ADVENT.MASTER,SAVED.ADVENTURES' TO SAVED ELSE CALL ADVFATAL(1)
+OPEN 'ADVENT.MASTER' TO ADVENTURE ELSE CALL ADVFATAL(2)
+PROMPT ':'
+1000 CRT
+CRT "Enter name of saved game (or <return> to start a new game)":
+INPUT ID
+IF ID = '' THEN
+  CRT @(-1):@(0,3):"Initializing a new game - please wait"
+  ENTER ADVENT.INIT
+END
+MATREAD ADVARSE FROM SAVED,OCONV(ID,'MCU') THEN
+  CRT @(-1):@(0,3):"Now restoring - please wait"
+END ELSE
+  CRT "No game with that name seems to be saved."
+  GOTO 1000
+END
+* this routine seems to want to convert all numerics into internal direct numbers for speed. Ok.
+FOR K = 1 TO 2090
+  IF NUM(ADVARSE(K)) THEN ADVARSE(K)+=0
+NEXT K
+READ ADVARSE(1) FROM ADVENTURE,'5' ELSE STOP;* ptext
+READ ADVARSE(2) FROM ADVENTURE,'10' ELSE STOP ;* ctext
+ADVARSE(3)='RESUME' ;* parm
+ADVARSE(4)=ADVENTURE ;* data file
+CRT "Sucessful restore of ":ID:" complete."
+ENTER ADVENTURES
