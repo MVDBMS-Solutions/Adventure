@@ -1,4 +1,7 @@
 # Adventure
+
+[![Join the chat at https://gitter.im/MVDBMS-Solutions/Adventure](https://badges.gitter.im/MVDBMS-Solutions/Adventure.svg)](https://gitter.im/MVDBMS-Solutions/Adventure?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Pick BASIC port of the famous Adventure game  
 https://github.com/MVDBMS-Solutions/Adventure  
 
