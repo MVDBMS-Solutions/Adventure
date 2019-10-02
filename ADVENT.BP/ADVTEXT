@@ -1,17 +1,18 @@
-SUBROUTINE ADVTEXT(XID)
+    SUBROUTINE ADVTEXT(XID)
 *
-* text helper subroutine for Adventure
-*
-* 4/1985 jdr for CDI
-*
-PRECISION 0
-NEW=''
-FOR N = LEN(XID) TO 1 STEP -1
- CHUNK=XID[N,1]
- SEQ=SEQ(CHUNK)-32
- IF SEQ>=0&SEQ<=89 THEN
-   NEW:=CHAR(MOD(SEQ+45,90)+32)
- END ELSE NEW:=CHUNK
-NEXT N
-XID=NEW
-RETURN
+* "decrpytion" subroutine for Adventure
+* basically a ROT45 cipher for characters between 32 and 122
+
+* 4/1985 dr for CDI
+
+    PRECISION 0
+    NEW=''
+    FOR N = LEN(XID) TO 1 STEP -1
+        CHUNK = XID[N,1]
+        VAL = SEQ(CHUNK)+13    ;* -32+45
+        IF VAL >= 45 AND VAL <= 134 THEN
+            NEW := CHAR(MOD(VAL,90)+32)
+        END ELSE NEW := CHUNK
+    NEXT N
+    XID = NEW
+    RETURN

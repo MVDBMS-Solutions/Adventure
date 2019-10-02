@@ -1,16 +1,24 @@
-* Unstuffs ADVENT.MASTER text items for use in the program
-DIM OUT(777)
-OPEN 'ADVENT.MASTER' TO FILEX ELSE STOP 'ADVENT.MASTER':" can't be opened"
-OUTCOUNT=0
-MATREAD OUT FROM FILEX,'ADVENT.MASTER' ELSE STOP 'ADVENT.MASTER':",":'ADVENT.MASTER':" not on file"
-LOOP
-  OUTCOUNT+=1
-  REC = OUT(OUTCOUNT)
-UNTIL REC='' DO
-  ID = REC<1,1>
-  DEL REC<1,1>
-  CONVERT CHAR(252):CHAR(251):CHAR(250):CHAR(13) TO CHAR(254):CHAR(253):CHAR(252) IN REC
-  WRITE REC ON FILEX,ID
-REPEAT
-*
-DELETE FILEX,'ADVENT.MASTER'
+* One-time utility to unpack ADVENT.MASTER text messages into individual
+* items for use in the program
+
+    DIM OUT(780)
+    OPEN 'ADVENT.MASTER' TO FILEX ELSE STOP 'ADVENT.MASTER':" can't be opened"
+
+    OUTCOUNT=0
+    MATREAD OUT FROM FILEX,'ADVENT.MASTER' ELSE STOP 'ADVENT.MASTER':",":'ADVENT.MASTER':" not on file"
+    CRT "unpacking text items ":
+
+    LOOP
+        OUTCOUNT+=1
+        REC = OUT(OUTCOUNT)
+    UNTIL REC='' DO
+        ID = REC<1,1>
+        DEL REC<1,1>
+        CONVERT CHAR(252):CHAR(251):CHAR(250):CHAR(13):CHAR(10) TO CHAR(254):CHAR(253):CHAR(252) IN REC
+        WRITE REC ON FILEX,ID
+        CRT '+':
+    REPEAT
+
+    DELETE FILEX,'ADVENT.MASTER'
+    CRT;CRT 'unpacking complete'
+    STOP

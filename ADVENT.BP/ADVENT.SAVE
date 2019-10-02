@@ -1,17 +1,21 @@
-!
+SUBROUTINE ADVENT.SAVE
+
 * ADVENTURE game - save subroutine
 *
-* reworked and revised for CDI 4/85 JD Ruggiero
+* Interesting technique rarely used in MV Basic, where a large array essentially overlays
+* the entire COMMON area, which allows it to be treated as a single unitary object.
 *
-PRECISION 0
-COMMON ADVARSE(2090); * overlays entire common area
-OPEN 'ADVENT.MASTER,SAVED.ADVENTURES' TO SAVED ELSE CALL ADVFATAL(1)
-ID=ADVARSE(3);* parm
-FOR X = 1 TO 5
- ADVARSE(X)='' ;* ptext, ctext, parm, adventure, xid
-NEXT X
-ADVARSE(1) = DATE():TIME()
-MATWRITE ADVARSE ON SAVED,OCONV(OCONV(ID,'MCU'),'MCP')
-CRT
-CRT "Game ":ID:" suspended."
-STOP
+* reworked and revised for CDI 4/85 JD Ruggiero
+
+    PRECISION 0
+    COMMON ADVARSE(2090)      ;* overlays entire common area
+    OPEN 'ADVENT.MASTER,SAVED.ADVENTURES' TO SAVED ELSE CALL ADVFATAL(1)
+
+    ID=ADVARSE(3)   ;* parm
+    FOR X = 1 TO 5
+        ADVARSE(X)=''         ;* ptext, ctext, parm, adventure, xid
+    NEXT X
+    ADVARSE(1) = DATE():TIME()
+    MATWRITE ADVARSE ON SAVED,OCONV(OCONV(ID,'MCU'),'MCP')
+    CRT; CRT "Game ":ID:" suspended."
+    STOP
